@@ -1,0 +1,8 @@
+<div class="navbar-component">
+    <app-navbar></app-navbar>
+</div>
+<div class="fav-component">
+    <!-- Event emmitter example  @Input @Output -->
+    <app-favorite [name]="myName" (customClick)="getInfoFromFavoriteComponent($event)"></app-favorite>
+</div>
+<router-outlet></router-outlet>
