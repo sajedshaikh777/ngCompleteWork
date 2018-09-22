@@ -227,9 +227,11 @@
 
 			</div>
 			<div class="col-md-4">
-				<button type="submit" class="btn btn-link p-0 m-0" (click)="removeItem(i)" *ngIf="profileForm.controls.items.length > 1">
-					<i class="fa fa-times" aria-hidden="true"></i> Remove {{i+1}}
-				</button>
+				<div class="d-flex justify-content-end">
+					<button type="submit" class="btn btn-link p-0 m-0" (click)="removeItem(i)" *ngIf="profileForm.controls.items.length > 1">
+						<i class="fa fa-times" aria-hidden="true"></i> Remove {{i+1}}
+					</button>
+				</div>
 			</div>
 
 		</div>
