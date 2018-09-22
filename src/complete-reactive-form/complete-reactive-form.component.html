@@ -1,0 +1,294 @@
+<!-- {{profileForm.status}} {{ profileForm.value | json}} -->
+
+<!-- <error-display [firstNameRequiredError]="firstNameRequiredError"></error-display> -->
+
+<!-- <h4> {{ amt | number: '1.1-2' }} </h4> -->
+
+<!-- <h4> {{ amt | myCurrency }} </h4> -->
+
+
+
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()" autocomplete="off">
+
+	<div class="form-group row">
+		<label for="firstname" class="col-sm-4 col-form-label">First Name</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="firstname" [class.error]="profileForm.controls.firstName.invalid && (profileForm.controls.firstName.dirty || profileForm.controls.firstName.touched)"
+			 formControlName="firstName"> {{profileForm.controls.firstName.errors | json}}
+			<div *ngIf="profileForm.controls.firstName.invalid && (profileForm.controls.firstName.dirty || profileForm.controls.firstName.touched)"
+			 class="alert alert-danger mt-2">
+				<div *ngIf="profileForm.controls.firstName.errors.required">
+					First Name is required.
+				</div>
+				<div *ngIf="profileForm.controls.firstName.errors.minlength">
+					First Name must be at least 4 characters long.
+				</div>
+				<div *ngIf="profileForm.controls.firstName.errors.maxlength">
+					First Name must be at most 6 characters long.
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="lastname" class="col-sm-4 col-form-label">Last Name</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="lastname" [class.error]="profileForm.controls.lastName.invalid && (profileForm.controls.lastName.dirty || profileForm.controls.lastName.touched)"
+			 formControlName="lastName">
+			<div *ngIf="profileForm.controls.lastName.invalid && (profileForm.controls.lastName.dirty || profileForm.controls.lastName.touched)"
+			 class="alert alert-danger mt-2">
+				<div *ngIf="profileForm.controls.lastName.errors.required">
+					Last Name is required.
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="websiteurl" class="col-sm-4 col-form-label">Website URL</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="websiteurl" [class.error]="profileForm.controls.websiteUrl.errors &&
+                        profileForm.controls.websiteUrl.dirty &&
+                        profileForm.controls.websiteUrl.errors.validUrl"
+			 formControlName="websiteUrl">
+			<div *ngIf="profileForm.controls.websiteUrl.errors &&
+                        profileForm.controls.websiteUrl.dirty &&
+                        profileForm.controls.websiteUrl.errors.validUrl"
+			 class="alert alert-danger mt-2">
+				Oops, only urls served over https and only from the .io top-level domain are accepted. Talk about restrictions!
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="email" class="col-sm-4 col-form-label">Email</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="email" [class.error]="profileForm.controls.email.invalid && (profileForm.controls.email.dirty || profileForm.controls.email.touched)"
+			 formControlName="email">
+			<div *ngIf="profileForm.controls.email.invalid && (profileForm.controls.email.dirty || profileForm.controls.email.touched)"
+			 class="alert alert-danger mt-2">
+				{{profileForm.controls.email.errors | json}}
+				<div *ngIf="profileForm.controls.email.errors.required">
+					Email is required.
+				</div>
+				<div *ngIf="profileForm.controls.email.errors.email">
+					Please enter a valid email.
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="amount" class="col-sm-4 col-form-label">Amount</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="amount" [class.error]="profileForm.controls.amount.invalid && (profileForm.controls.amount.dirty || profileForm.controls.amount.touched)"
+			 formControlName="amount" maxlength="10" appCurrencyFormatter>
+			<div *ngIf="profileForm.controls.amount.invalid && (profileForm.controls.amount.dirty || profileForm.controls.amount.touched)"
+			 class="alert alert-danger mt-2">
+				<div *ngIf="profileForm.controls.amount.errors.required">
+					Amount is required.
+				</div>
+				<div *ngIf="profileForm.controls.amount.errors.pattern">
+					Please enter a valid amount.
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- <p>{{inputValue | number: '1.1-3' }}</p> -->
+
+	<div class="form-group row">
+		<label for="recurring" class="col-sm-4 col-form-label">Recurring</label>
+		<div class="col-sm-8">
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" id="recurring-radio-no" value="no" checked formControlName="recurring">
+				<label class="form-check-label" for="recurring-radio-no">No</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" id="recurring-radio-yes" value="yes" formControlName="recurring">
+				<label class="form-check-label" for="recurring-radio-yes">Yes</label>
+			</div>
+		</div>
+	</div>
+
+	<!-- <mat-radio-group class="recurring-radio-group" [(ngModel)]="recurringArrayData">
+		<mat-radio-button class="recurring-radio" *ngFor="let recurringArray of recurringArray" [value]="recurringArray" [checked]="recurringArray === 'No'">
+			{{recurringArray}}
+		</mat-radio-button>
+	</mat-radio-group> -->
+
+	<!-- {{profileForm.controls.recurring.value}} -->
+
+
+
+	<!-- {{profileForm.controls.amount.errors | json}} -->
+
+
+	<div formGroupName="address" *ngIf="profileForm.controls.recurring.value === 'yes'">
+
+		<div class="form-group row">
+			<label for="street" class="col-sm-4 col-form-label">Street</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" id="street" formControlName="street">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="city" class="col-sm-4 col-form-label">City</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" id="city" formControlName="city">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="state" class="col-sm-4 col-form-label">State</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" id="state" formControlName="state">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="zip" class="col-sm-4 col-form-label">Zip Code</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" id="zip" [class.error]="profileForm.controls.address.controls.zip.invalid && (profileForm.controls.address.controls.zip.dirty || profileForm.controls.address.controls.zip.touched)"
+				 formControlName="zip" maxlength="6">
+				<div *ngIf="profileForm.controls.address.controls.zip.invalid && (profileForm.controls.address.controls.zip.dirty || profileForm.controls.address.controls.zip.touched)"
+				 class="alert alert-danger mt-2">
+					<div *ngIf="profileForm.controls.address.controls.zip.errors.required">
+						Zip code is required.
+					</div>
+					<div *ngIf="profileForm.controls.address.controls.zip.errors.minlength">
+						Zip code must be 6 digit long.
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+
+
+	<div formArrayName="items" *ngFor="let item of profileForm.get('items').controls; let i = index;">
+
+		<h5>Form Array {{i + 1}}</h5>
+
+		<div [formGroupName]="i" class="row">
+			<div class="col-md-8">
+
+				<div class="form-group row">
+					<label for="name" class="col-sm-6 col-form-label">Name</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="name" [class.error]="profileForm.controls.items.controls[i].controls.name.invalid && (profileForm.controls.items.controls[i].controls.name.dirty || profileForm.controls.items.controls[i].controls.name.touched)"
+						 formControlName="name"> {{profileForm.controls.items.controls[i].value | json}}
+						{{profileForm.controls.items.controls[i].controls.name.invalid
+						}}
+
+						<div *ngIf="profileForm.controls.items.controls[i].controls.name.invalid && (profileForm.controls.items.controls[i].controls.name.dirty || profileForm.controls.items.controls[i].controls.name.touched)"
+						 class="alert alert-danger mt-2">
+							<div *ngIf="profileForm.controls.items.controls[i].controls.name.errors.required">
+								Name is required.
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="description" class="col-sm-6 col-form-label">Description</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="description" [class.error]="profileForm.controls.items.controls[i].controls.description.invalid && (profileForm.controls.items.controls[i].controls.description.dirty || profileForm.controls.items.controls[i].controls.description.touched)"
+						 formControlName="description">
+
+						<div *ngIf="profileForm.controls.items.controls[i].controls.description.invalid && (profileForm.controls.items.controls[i].controls.description.dirty || profileForm.controls.items.controls[i].controls.description.touched)"
+						 class="alert alert-danger mt-2">
+							<div *ngIf="profileForm.controls.items.controls[i].controls.description.errors.required">
+								Description is required.
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="price" class="col-sm-6 col-form-label">Price</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="price" [class.error]="profileForm.controls.items.controls[i].controls.price.invalid && (profileForm.controls.items.controls[i].controls.price.dirty || profileForm.controls.items.controls[i].controls.price.touched)"
+						 formControlName="price" maxlength="6">
+						<div *ngIf="profileForm.controls.items.controls[i].controls.price.invalid && (profileForm.controls.items.controls[i].controls.price.dirty || profileForm.controls.items.controls[i].controls.price.touched)"
+						 class="alert alert-danger mt-2">
+							<div *ngIf="profileForm.controls.items.controls[i].controls.price.errors.required">
+								Price is required.
+							</div>
+							<div *ngIf="profileForm.controls.items.controls[i].controls.price.errors.pattern">
+								Please enter valid price.
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-md-4">
+				<button type="submit" class="btn btn-link p-0 m-0" (click)="removeItem(i)" *ngIf="profileForm.controls.items.length > 1">
+					<i class="fa fa-times" aria-hidden="true"></i> Remove {{i+1}}
+				</button>
+			</div>
+
+		</div>
+		<hr>
+	</div>
+
+	<div class="d-flex justify-content-end">
+		<button type="submit" class="btn btn-primary rounded-0" (click)="addItem()" *ngIf="profileForm.controls.items.length < 3">
+			<i class="fa fa-plus" aria-hidden="true"></i> Add
+		</button>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- {{profileForm.controls.aliases.length}} -->
+	<!-- {{profileForm.controls.aliases.controls[i].value}} -->
+
+	<!-- <div formArrayName="aliases">
+        <h3>Aliases</h3>
+
+        <div *ngFor="let address of aliases.controls; let i=index">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group row">
+                        <label for="alias" class="col-sm-6 col-form-label">Alias {{i+1}}</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="alias" [formControlName]="i">
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-link" (click)="removeAlias(i)" *ngIf="profileForm.controls.aliases.length > 1">
+                        <i class="fa fa-times" aria-hidden="true"></i> Remove Alias {{i+1}}
+                    </button>
+                </div>
+            </div>
+            <hr>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary" (click)="addAlias()" *ngIf="profileForm.controls.aliases.length < 3">
+                <i class="fa fa-plus"></i>
+                Add Alias
+            </button>
+        </div>
+
+    </div> -->
+
+	<button type="submit" class="btn btn-primary rounded-0" [disabled]="!profileForm.valid">Submit</button>
+
+</form>

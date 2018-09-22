@@ -1,8 +1,18 @@
-<div class="navbar-component">
-    <app-navbar></app-navbar>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <div class="navbar-component">
+                <app-navbar></app-navbar>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <div class="fav-component">
+                <!-- Event emmitter example  @Input @Output -->
+                <!-- <app-favorite [name]="myName" (customClick)="getInfoFromFavoriteComponent($event)"></app-favorite> -->
+            </div>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
 </div>
-<div class="fav-component">
-    <!-- Event emmitter example  @Input @Output -->
-    <app-favorite [name]="myName" (customClick)="getInfoFromFavoriteComponent($event)"></app-favorite>
-</div>
-<router-outlet></router-outlet>

@@ -20,6 +20,9 @@ import { ReactiveFormComponent } from '../reactive-form-component/reactive-form.
 import { ReactiveFormArrayComponent } from '../reactive-form-array/reactive-form-array.component';
 import { FavoriteComponent } from './favorite-component/favorite.component';
 
+import { CompleteReactiveFormComponent, MyCurrencyPipe, MyCurrencyFormatterDirective } from '../complete-reactive-form';
+import { ErrorDisplayComponent } from '../error-display';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +38,11 @@ import { FavoriteComponent } from './favorite-component/favorite.component';
     TemplateDrivenFormComponent,
     ReactiveFormComponent,
     ReactiveFormArrayComponent,
-    FavoriteComponent
+    FavoriteComponent,
+    CompleteReactiveFormComponent,
+    MyCurrencyPipe,
+    MyCurrencyFormatterDirective,
+    ErrorDisplayComponent
   ],
   imports: [
     BrowserModule,
@@ -76,15 +83,24 @@ import { FavoriteComponent } from './favorite-component/favorite.component';
         component: ReactiveFormArrayComponent
       },
       {
+        path: 'completereactiveform',
+        component: CompleteReactiveFormComponent
+      },
+      {
         path: '**',
         component: NotFoundComponent
       },
     ])
   ],
   providers: [
+    MyCurrencyPipe,
     PostService,
     { provide: ErrorHandler, useClass: AppErrorHandler }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    MyCurrencyPipe,
+    MyCurrencyFormatterDirective,
+  ]
 })
 export class AppModule { }
